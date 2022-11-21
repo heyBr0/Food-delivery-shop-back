@@ -34,7 +34,9 @@ export const createUser = async (req, res, next) => {
     req.body.password = hashedPassword; */
     //----------------------------------------------//
     const user = new UsersCollection(req.body);
-    user.profileImage = `http://localhost:4000/${req.file.filename}`;
+    if (req.file) {
+      user.profileImage = `http://localhost:4000/${req.file.filename}`;
+    }
     await user.save();
     console.log(user.fullName);
     res.json({ success: true, record: user });

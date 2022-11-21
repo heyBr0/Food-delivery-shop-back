@@ -59,7 +59,7 @@ app.use(express.static("upload"))
 app.get("/", (req, res) => {
   res.send("hello at Home");
 });
-app.use("/users", verifyToken, upload.single("image"), userRoutes);
+app.use("/users",upload.single("image"), userRoutes);
 app.use("/records", recordsRoutes);
 app.use("/orders", otherRoutes);
 // 404
