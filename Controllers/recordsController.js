@@ -10,7 +10,7 @@ export const getRecords = async (req, res, next) => {
   }
 };
 
-export const getRecord = async (req, res, next) => {
+export const getSingleRecord = async (req, res, next) => {
   //"/records/:id"
   try {
     const id = req.params.id;

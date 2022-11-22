@@ -14,7 +14,7 @@ export const getOrders = async (req, res, next) => {
   }
 };
 
-export const getOrder = async (req, res, next) => {
+export const getSingleOrder = async (req, res, next) => {
   try {
     const id = req.params.id;
     const singleOrder = await OrdersCollection.findById(id);

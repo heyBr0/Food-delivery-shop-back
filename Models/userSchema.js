@@ -28,7 +28,7 @@ const userSchema = new Schema(
     profileImage: {
       type: String,
       default: function () {
-        return `https://joeschmoe.io/${this.firstName}`;
+        return `https://joeschmoe.io/api/v1/${this.firstName}`;
       },
     },
     orders: [{ type: Schema.Types.ObjectId, ref: "orders" }],

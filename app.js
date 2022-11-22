@@ -46,7 +46,7 @@ app.use(express.json());
 // Controllers = request handlers, logic
 
 // cors
-app.use(cors({origin:"http://localhost:3000"}))
+app.use(cors({origin:"http://localhost:3000", exposedHeaders:["token"]}))
 
 // cookie Parser
 app.use(cookieParser());

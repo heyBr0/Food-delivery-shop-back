@@ -1,24 +1,24 @@
 import express from "express";
 import {
-  getRecord,
   getRecords,
+  getSingleRecord,
   createRecord,
   deleteRecord,
   patchRecord,
 } from "../Controllers/recordsController.js";
 import { isAdmin } from "../validations/isAdminMiddleware.js";
-
+import verifyToken from "../validations/verifyToken.js";
 const router = express.Router();
 
+// Route GET "/records"
 router.get("/", getRecords);
-
-// single record
-router.get("/:id", getRecord);
-
-router.post("/", isAdmin, createRecord);
-
-router.patch("/:id",isAdmin, patchRecord);
-
-router.delete("/:id",isAdmin, deleteRecord);
+// Route GET "/records/:id"
+router.get("/:id", getSingleRecord);
+// Route POST "/records"
+router.post("/", verifyToken, isAdmin, createRecord);
+// Route PATCH "/records/:id"
+router.patch("/:id",verifyToken, isAdmin, patchRecord);
+// Route DELETE "/records/:id"
+router.delete("/:id", verifyToken, isAdmin, deleteRecord);
 
 export default router;

@@ -11,7 +11,7 @@ export const getUsers = async (req, res, next) => {
   }
 };
 
-export const getUser = async (req, res, next) => {
+export const getSingleUser = async (req, res, next) => {
   try {
     const id = req.params.id;
     const singleUser = await UsersCollection.findById(id);
@@ -110,3 +110,16 @@ export const loginUser = async (req, res, next) => {
     next(error);
   }
 };
+
+
+export const checkUserToken= async(req, res, next)=>{
+try {
+  const token = req.headers.token
+  const decoded = jwt.verify(token, process.env.SECRET)
+
+  const user = await UsersCollection.findById(decoded._id)
+  res.json({success:true, data: user})
+} catch (err) {
+  next(err)
+}
+}
