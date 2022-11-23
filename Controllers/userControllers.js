@@ -33,13 +33,13 @@ export const createUser = async (req, res, next) => {
     console.log(hashedPassword);
     req.body.password = hashedPassword; */
     //----------------------------------------------//
+
     const user = new UsersCollection(req.body);
     if (req.file) {
       user.profileImage = `http://localhost:4000/${req.file.filename}`;
     }
     await user.save();
-    console.log(user.fullName);
-    res.json({ success: true, record: user });
+    res.json({ success: true, user });
   } catch (error) {
     next(error);
   }
@@ -47,11 +47,32 @@ export const createUser = async (req, res, next) => {
 
 export const patchUser = async (req, res, next) => {
   try {
-    const id = req.params.id;
-    const updatedUser = await UsersCollection.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
-    res.json({ success: true, user: updatedUser });
+    const user = await UsersCollection.findById(req.params.id);
+    if (req.file) {
+      user.profileImage = `http://localhost:4000/${req.file.filename}`;
+    }
+
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+    await user.save();
+
+    let body = {};
+    for (const key in req.body) {
+      if (req.body[key] !== "" && key !== "password") {
+        body[key] = req.body[key];
+      }
+    }
+
+    const updatedUser = await UsersCollection.findByIdAndUpdate(
+      req.params.id,
+      body,
+      {
+        new: true,
+      }
+    );
+
+    res.json({ success: true, data: updatedUser });
   } catch (error) {
     next(error);
   }
@@ -111,15 +132,14 @@ export const loginUser = async (req, res, next) => {
   }
 };
 
+export const checkUserToken = async (req, res, next) => {
+  try {
+    const token = req.headers.token;
+    const decoded = jwt.verify(token, process.env.SECRET);
 
-export const checkUserToken= async(req, res, next)=>{
-try {
-  const token = req.headers.token
-  const decoded = jwt.verify(token, process.env.SECRET)
-
-  const user = await UsersCollection.findById(decoded._id)
-  res.json({success:true, data: user})
-} catch (err) {
-  next(err)
-}
-}
+    const user = await UsersCollection.findById(decoded._id);
+    res.json({ success: true, data: user });
+  } catch (err) {
+    next(err);
+  }
+};

@@ -56,11 +56,12 @@ userSchema.virtual("domain").get(function () {
 // pre hash
 userSchema.pre("save", function (next) {
   // ---> use 1 of 2 hash options
-  /*   if (this.isModified("password")) { */
-  const hashedPassword = bcrypt.hashSync(this.password, 10);
-  this.password = hashedPassword;
-  /*  } */
-  console.log("Password hashed on Pre-Save into DB");
+  if (this.isModified("password")) {
+    const hashedPassword = bcrypt.hashSync(this.password, 10);
+    this.password = hashedPassword;
+    console.log("Password hashed on Pre-Save into DB");
+  }
+
   next();
 });
 
