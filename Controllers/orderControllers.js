@@ -18,7 +18,7 @@ export const getSingleOrder = async (req, res, next) => {
   try {
     const id = req.params.id;
     const singleOrder = await OrdersCollection.findById(id);
-    res.json({ success: true, record: singleOrder });
+    res.json({ success: true, data: singleOrder });
   } catch (error) {
     next(error);
   }
@@ -32,13 +32,16 @@ export const createOrder = async (req, res, next) => {
     user.orders.push(order._id)
     await user.save() */
 
-    await UsersCollection.findByIdAndUpdate(
+    const updatedUser = await UsersCollection.findByIdAndUpdate(
       order.userId,
       { $push: { orders: order._id } },
       { new: true }
-    );
+    ).populate({path:"orders", populate: {
+      path: "records", 
+      model: "records"
+    }});
 
-    res.json({ success: true, order: order });
+    res.json({ success: true, data: updatedUser });
   } catch (error) {
     next(error);
   }
@@ -52,7 +55,7 @@ export const patchOrder = async (req, res, next) => {
       req.body,
       { new: true }
     );
-    res.json({ success: true, record: updatedOrder });
+    res.json({ success: true, data: updatedOrder });
   } catch (error) {
     next(error);
   }
@@ -64,10 +67,21 @@ export const deleteOrder = async (req, res, next) => {
     const existingOrder = await OrdersCollection.findById(id);
 
     if (existingOrder) {
-      const deleteStatus = await OrdersCollection.deleteOne({
+      await OrdersCollection.deleteOne({
         _id: existingOrder._id,
       });
-      res.json({ success: true, status: deleteStatus });
+
+      // delete order from user orders as well
+      const updatedUser = await UsersCollection.findByIdAndUpdate(
+        req.user._id,
+        { $pull: { orders: id} },
+        { new: true }
+      ).populate({path:"orders", populate: {
+        path: "records", 
+        model: "records"
+      }});
+
+      res.json({ success: true, data: updatedUser });
     } else {
       throw new Error("record id doesn't exist");
     }

@@ -70,7 +70,10 @@ export const patchUser = async (req, res, next) => {
       {
         new: true,
       }
-    );
+    ).populate({path:"orders", populate: {
+      path: "records", 
+      model: "records"
+    }});
 
     res.json({ success: true, data: updatedUser });
   } catch (error) {
@@ -106,7 +109,7 @@ export const loginUser = async (req, res, next) => {
       if (verify) {
         let token = jwt.sign(
           {
-            id: user._id,
+            _id: user._id,
             email: user.email,
             role: user.role,
             name: user.fullName,
@@ -118,7 +121,10 @@ export const loginUser = async (req, res, next) => {
           user._id,
           { token: token },
           { new: true }
-        );
+        ).populate({path:"orders", populate: {
+          path: "records", 
+          model: "records"
+        }});
         res.header("token", token);
         res.json({ success: true, data: updatedUser });
       } else {
@@ -137,7 +143,10 @@ export const checkUserToken = async (req, res, next) => {
     const token = req.headers.token;
     const decoded = jwt.verify(token, process.env.SECRET);
 
-    const user = await UsersCollection.findById(decoded._id);
+    const user = await UsersCollection.findById(decoded._id).populate({path:"orders", populate: {
+      path: "records", 
+      model: "records"
+    }});
     res.json({ success: true, data: user });
   } catch (err) {
     next(err);

@@ -9,7 +9,7 @@ async function verifyToken(req, res, next) {
     // verify token
     const payload = jwt.verify(token, process.env.SECRET);
     // get user from database
-    const user = await UsersCollection.findById(payload.id);
+    const user = await UsersCollection.findById(payload._id);
     // attaching user in request
     console.log(payload);
   

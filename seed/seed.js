@@ -9,7 +9,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/live-coding-shop", () => {
 });
 
 async function addFakeRecords() {
-  const recordPromises = Array(10)
+  const recordPromises = Array(16)
     .fill(null)
     .map(() => {
       const record = new RecordsCollection({
@@ -25,7 +25,7 @@ async function addFakeRecords() {
   mongoose.connection.close();
 }
 
-//addFakeRecords();
+addFakeRecords();
 
 async function addFakeUsers() {
   const userPromises = Array(10)

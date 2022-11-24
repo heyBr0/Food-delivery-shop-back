@@ -4,9 +4,13 @@ import RecordsCollection from "../Models/recordSchema.js";
 export const getRecords = async (req, res, next) => {
   try {
     const records = await RecordsCollection.find();
-    res.json(records);
+    if (req.query.page) {
+      res.json(records.slice(req.query.start, req.query.end));
+    } else {
+      res.json(records);
+    }
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
 
@@ -17,7 +21,7 @@ export const getSingleRecord = async (req, res, next) => {
     const singleRecord = await RecordsCollection.findById(id);
     res.json({ success: true, record: singleRecord });
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
 
@@ -28,7 +32,7 @@ export const createRecord = async (req, res, next) => {
     await record.save();
     res.json({ success: true, record: record });
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
 
@@ -43,7 +47,7 @@ export const patchRecord = async (req, res, next) => {
     );
     res.json({ success: true, record: updatedRecord });
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
 // simple DELETE
@@ -73,6 +77,6 @@ export const deleteRecord = async (req, res, next) => {
       throw new Error("record id doesn't exist");
     }
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
