@@ -5,14 +5,13 @@ import userRoutes from "./routes/userRoutes.js";
 import recordsRoutes from "./routes/recordsRoutes.js";
 import otherRoutes from "./routes/ordersRoutes.js";
 import dotenv from "dotenv";
-import verifyToken from "./validations/verifyToken.js";
 import cookieParser from "cookie-parser";
 import multer from "multer";
-import cors from "cors"
+/* import cors from "cors" */
 dotenv.config();
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 
 // configure Multer package, setting storage destination
@@ -46,7 +45,7 @@ app.use(express.json());
 // Controllers = request handlers, logic
 
 // cors
-app.use(cors({origin:"http://localhost:3000", exposedHeaders:["token"]}))
+/* app.use(cors({origin:"http://localhost:3000", exposedHeaders:["token"]})) */
 
 // cookie Parser
 app.use(cookieParser());
