@@ -4,10 +4,14 @@ import RecordsCollection from "../Models/recordSchema.js";
 export const getRecords = async (req, res, next) => {
   try {
     const records = await RecordsCollection.find();
+
     if (req.query.page) {
-      res.json(records.slice(req.query.start, req.query.end));
-    } else {
-      res.json(records);
+      if (req.query.page * 8 <= records.length) {
+        res.json({
+          success: true,
+          data: records.slice(req.query.page * 8 - 8, req.query.page * 8),
+        });
+      }
     }
   } catch (error) {
     next(error);

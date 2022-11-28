@@ -7,7 +7,7 @@ import otherRoutes from "./routes/ordersRoutes.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import multer from "multer";
-/* import cors from "cors" */
+import cors from "cors"
 dotenv.config();
 
 const app = express();
@@ -45,7 +45,7 @@ app.use(express.json());
 // Controllers = request handlers, logic
 
 // cors
-/* app.use(cors({origin:"http://localhost:3000", exposedHeaders:["token"]})) */
+app.use(cors({origin:"http://localhost:3000", exposedHeaders:["token"]}))
 
 // cookie Parser
 app.use(cookieParser());
