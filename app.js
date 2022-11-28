@@ -53,6 +53,12 @@ app.use(cookieParser());
 
 // serve static files/pages
 app.use(express.static("upload"))
+app.use(express.static("Views/build"))
+
+// BUILD
+app.get("/", (req, res) =>{
+  res.sendFile("./Views/build/index.html", {root: "."})
+})
 
 // -----------ROUTES------------
 // home
