@@ -1,13 +1,16 @@
 {
   "files": {
-    "main.css": "./static/css/main.8dc4256e.css",
-    "main.js": "./static/js/main.77004e65.js",
+    "main.css": "./static/css/main.6505dc6d.css",
+    "main.js": "./static/js/main.1cfc0bd1.js",
+    "static/media/Berlin1.jpg": "./static/media/Berlin1.1873b5830abcef0a6331.jpg",
+    "static/media/Berlin2.jpg": "./static/media/Berlin2.cce0993348249fda7a45.jpg",
+    "static/media/icons8-delivery.gif": "./static/media/icons8-delivery.87dd94aa6d2c886227e7.gif",
     "index.html": "./index.html",
-    "main.8dc4256e.css.map": "./static/css/main.8dc4256e.css.map",
-    "main.77004e65.js.map": "./static/js/main.77004e65.js.map"
+    "main.6505dc6d.css.map": "./static/css/main.6505dc6d.css.map",
+    "main.1cfc0bd1.js.map": "./static/js/main.1cfc0bd1.js.map"
   },
   "entrypoints": [
-    "static/css/main.8dc4256e.css",
-    "static/js/main.77004e65.js"
+    "static/css/main.6505dc6d.css",
+    "static/js/main.1cfc0bd1.js"
   ]
 }

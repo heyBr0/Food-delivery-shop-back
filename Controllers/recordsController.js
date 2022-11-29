@@ -32,7 +32,11 @@ export const getSingleRecord = async (req, res, next) => {
 // POST
 export const createRecord = async (req, res, next) => {
   try {
+
     const record = new RecordsCollection(req.body);
+    if(req.file){
+      record.img = `/${req.file.filename}`
+    }
     await record.save();
     res.json({ success: true, record: record });
   } catch (error) {

@@ -65,7 +65,7 @@ app.get("/", (req, res) => {
   res.send("hello at Home");
 });
 app.use("/users",upload.single("image"), userRoutes);
-app.use("/records", recordsRoutes);
+app.use("/records", upload.single("image"), recordsRoutes);
 app.use("/orders", otherRoutes);
 // 404
 app.use((req, res, next) => {
