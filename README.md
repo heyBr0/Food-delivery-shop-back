@@ -13,7 +13,7 @@ https://food-delivery-shop.onrender.com
   
 Sign Up:  
   
-![Sign Up](/seed/signupPic.jpgjpg)  
+![Sign Up](/seed/signupPic.jpg)  
   
 Shop:  
 
